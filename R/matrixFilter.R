@@ -48,18 +48,9 @@
 matrixFilter <- function(MAE, miningMatrix, negativeOnly = TRUE,
                          predictedOnly = TRUE, threshold = 1, maxCor = 1){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE. This will store the output of matrixFilter.
-                           Please use dataMiningMatrix first.')
+    if (missing(MAE)) stop('MAE is missing. Add MAE. This will store the output of matrixFilter. Please use dataMiningMatrix first.')
 
-    if (missing(miningMatrix)) stop('
-                                    miningMatrix is missing.
-                                    Add large correlation matrix. Please
-                                    use the dataMiningMatrix function first.
-                                    The output of dataMiningMatrix should be
-                                    found as an assay within the MAE used in
-                                    the dataMiningMatrix function.')
+    if (missing(miningMatrix)) stop('miningMatrix is missing. Add large correlation matrix. Please use the dataMiningMatrix function first. The output of dataMiningMatrix should be found as an assay within the MAE used in the dataMiningMatrix function.')
 
     # miR-mRNA interactions with a - ave correlation
     if (negativeOnly == TRUE) {

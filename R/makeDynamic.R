@@ -36,9 +36,9 @@
 #'
 #' MAE <- startObject(miR = miR, mRNA = mRNA)
 #'
-#' MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
+#' MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
 #'
-#' MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "useast")
+#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
 #'
 #' MAE <- diffExpressRes(MAE, df = assay(MAE, 1), dataType = 'Log2FC',
 #'                genes_ID = assay(MAE, 3),
@@ -57,42 +57,15 @@
 makeDynamic <- function(MAE, miR_expression, mRNA_expression, miR_IDs_adj,
                         dataType){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE. This will store the output of
-                           makeDynamic. Please use matrixFilter first.')
+    if (missing(MAE)) stop('MAE is missing. Add MAE. This will store the output of makeDynamic. Please use matrixFilter first.')
 
-    if (missing(miR_expression)) stop('
-                                      miR_expression is missing.
-                                      Add dataframe which contains DE
-                                      abundance values and gene IDs. Please
-                                      use diffExpressRes on miR data first.
-                                      Output of diffExpressRes should be stored
-                                      as an assay within the MAE used in the
-                                      diffExpressRes function.')
+    if (missing(miR_expression)) stop('miR_expression is missing. Add dataframe which contains DE abundance values and gene IDs. Please use diffExpressRes on miR data first. Output of diffExpressRes should be stored as an assay within the MAE used in the diffExpressRes function.')
 
-    if (missing(mRNA_expression)) stop('
-                                      mRNA_expression is missing.
-                                      Add dataframe which contains DE
-                                      abundance values and gene IDs. Please
-                                      use diffExpressRes on mRNA data first.
-                                      Output of diffExpressRes should be stored
-                                      as an assay within the MAE used in the
-                                      diffExpressRes function.')
+    if (missing(mRNA_expression)) stop('mRNA_expression is missing. Add dataframe which contains DE abundance values and gene IDs. Please use diffExpressRes on mRNA data first. Output of diffExpressRes should be stored as an assay within the MAE used in the diffExpressRes function.')
 
-    if (missing(miR_IDs_adj)) stop('
-                                   miR_IDs_adj is missing.
-                                   Add adjusted miR gene ID data.
-                                   Please use the getIdsMirHuman or
-                                   getIdsMirMouse function first. Output of
-                                   a getIdsMir function should be stored as
-                                   assays within the MAE used in the
-                                   getIds function.')
+    if (missing(miR_IDs_adj)) stop('miR_IDs_adj is missing. Add adjusted miR gene ID data. Please use the getIdsMir function first. Output of a getIdsMir function should be stored as assays within the MAE used in the getIds function.')
 
-    if (missing(dataType)) stop('
-                                dataType is missing.
-                                Add a string. "En" for ensembl or "L"
-                                for entrez.')
+    if (missing(dataType)) stop('dataType is missing. Add a string. "En" for ensembl or "L" for entrez.')
 
     # retrieve data frames from MAE objects
     miR_expression <- miR_expression

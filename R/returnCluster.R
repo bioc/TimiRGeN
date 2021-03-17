@@ -37,24 +37,11 @@
 #'                      fitCluster = 0.5)
 returnCluster <-function(MAE, clusterData, whichCluster, fitCluster = 0.99){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE object. Results from returnCluster
-                           will be stored within this MAE. Please
-                           use createClusters first.')
+    if (missing(MAE)) stop('MAE is missing. Add MAE object. Results from returnCluster will be stored within this MAE. Please use createClusters first.')
 
-    if (missing(clusterData)) stop('
-                                   clusterData is missing.
-                                   Add dataframe which has cluster-pathway
-                                   fit scores. Please use the createClusters
-                                   function first. clusterData should be
-                                   stored as an assay within the MAE used in
-                                   the createClusters function.')
+    if (missing(clusterData)) stop('clusterData is missing. Add dataframe which has cluster-pathway fit scores. Please use the createClusters function first. clusterData should be stored as an assay within the MAE used in the createClusters function.')
 
-    if (missing(whichCluster)) stop('
-                                    whichCluster is missing.
-                                    Add integer which represents the
-                                    cluster that is of interest.')
+    if (missing(whichCluster)) stop('whichCluster is missing. Add integer which represents the cluster that is of interest.')
 
     X <- as.data.frame(clusterData)
 

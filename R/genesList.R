@@ -37,11 +37,11 @@
 #' @importFrom stringr str_extract
 #' @usage genesList(MAE, method, genetic_data, timeString, miR_data, mRNA_data)
 #' @examples
-#' miR <- mm_miR
+#' data(mm_miR)
 #'
-#' mRNA <- mm_mRNA
+#' data(mm_mRNA)
 #'
-#' MAE <- startObject(miR = miR, mRNA = mRNA)
+#' MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 #'
 #'# For separated analysis
 #'
@@ -64,29 +64,14 @@
 genesList <- function(MAE, method, genetic_data, timeString, miR_data,
                       mRNA_data){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE. Please use combineGenes or addPrefix first.
-                           ')
+    if (missing(MAE)) stop('MAE is missing. Add MAE. Please use combineGenes or addPrefix first.')
 
     if (method == 'c') {
 
 
-        if (missing(genetic_data)) stop('
-                                        genetic_data is missing.
-                                        Input combined miR and mRNA data.
-                                        Colnames structure should be
-                                        timepoint.resulttype. Please use
-                                        the combineGenes function first. Output
-                                        of combineGenes should be stored as an
-                                        assay within the MAE used in the
-                                        combineGenes function.')
+        if (missing(genetic_data)) stop('genetic_data is missing. Input combined miR and mRNA data. Colnames structure should be timepoint.resulttype. Please use the combineGenes function first. Output of combineGenes should be stored as an assay within the MAE used in the combineGenes function.')
 
-        if (missing(timeString)) stop('
-                                      timeString is missing.
-                                      Input unit of time. E.g. if colnames were
-                                      D1.log2fc, D2.log2fc, D3.log2fc;
-                                      then timeString = "D".')
+        if (missing(timeString)) stop('timeString is missing. Input unit of time. E.g. if colnames were D1.log2fc, D2.log2fc, D3.log2fc; then timeString = "D".')
 
         metadata <- `metadata<-` <- NULL
 

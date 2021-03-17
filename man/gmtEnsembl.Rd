@@ -34,13 +34,13 @@ Will create two new dataframes with ensembl IDs and wikipathway information.
 \examples{
 library(org.Mm.eg.db)
 
-miR <- mm_miR
+data(mm_miR)
 
-mRNA <- mm_mRNA
+data(mm_mRNA)
 
-MAE <- startObject(miR = miR, mRNA = mRNA)
+MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 
-MAE <- dloadGmt(MAE, speciesInitial = "Mm")
+MAE <- dloadGmt(MAE, species = "Mus musculus")
 
 MAE <- gmtEnsembl(MAE = MAE, assay(MAE, 3),
                    assay(MAE, 5), org.Mm.eg.db)

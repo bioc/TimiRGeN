@@ -21,39 +21,21 @@
 #' @examples
 #' library(org.Mm.eg.db)
 #'
-#' miR <- mm_miR
+#' data(mm_miR)
 #'
-#' mRNA <- mm_mRNA
+#' data(mm_mRNA)
 #'
-#' MAE <- startObject(miR = miR, mRNA = mRNA)
+#' MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 #'
 #' MAE <- combineGenes(MAE = MAE, miR_data = assay(MAE, 1),
 #'                     mRNA_data = assay(MAE, 2))
 combineGenes <- function(MAE, miR_data, mRNA_data){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MultiAssayExperiment to store the output of
-                           combineGenes. Please use the startObject
-                           function first.')
+    if (missing(MAE)) stop('MAE is missing. Add MultiAssayExperiment to store the output of combineGenes. Please use the startObject function first.')
 
-    if (missing(miR_data)) stop('
-                                miR_data is missing.
-                                Add dataframe of miR data. Rows should be
-                                genes, columns are DE results and time point.
-                                Please use the startObject function first.
-                                Output of the startObject function will be
-                                stored as assays within the MAE used in the
-                                startObject function.')
+    if (missing(miR_data)) stop('miR_data is missing. Add dataframe of miR data. Rows should be genes, columns are DE results and time point. Please use the startObject function first. Output of the startObject function will be stored as assays within the MAE used in the startObject function.')
 
-    if (missing(mRNA_data)) stop('
-                                mRNA_data is missing.
-                                Add dataframe of mRNA data. Rows should be
-                                genes, columns are DE results and time point.
-                                Please use the startObject function first.
-                                Output of the startObject function will be
-                                stored as assays within the MAE used in the
-                                startObject function.')
+    if (missing(mRNA_data)) stop('mRNA_data is missing. Add dataframe of mRNA data. Rows should be genes, columns are DE results and time point. Please use the startObject function first. Output of the startObject function will be stored as assays within the MAE used in the startObject function.')
 
     # Extract the miR and mRNA data
     miR_data <- as.data.frame(miR_data)

@@ -34,15 +34,15 @@ addIds function.
 \examples{
 library(org.Mm.eg.db)
 
-miR <- mm_miR
+data(mm_miR)
 
-mRNA <- mm_mRNA
+data(mm_mRNA)
 
-Data <- startObject(miR = miR, mRNA = mRNA)
+Data <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 
-Data <- getIdsMirMouse(Data, assay(Data, 1))
+Data <- getIdsMir(Data, assay(Data, 1), org.Mm.eg.db, 'mmu')
 
-Data <- getIdsMrnaMouse(Data, assay(Data, 2), mirror = 'useast')
+Data <- getIdsMrna(Data, assay(Data, 2), mirror = 'useast', 'mmusculus')
 
 Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
                      mRNA_data = assay(Data, 2))

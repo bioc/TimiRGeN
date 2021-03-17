@@ -23,13 +23,15 @@
 #' @examples
 #' library(org.Mm.eg.db)
 #'
-#' miR <- mm_miR
+#' data(mm_miR)
 #'
-#' mRNA <- mm_mRNA
+#' data(mm_mRNA)
 #'
-#' MAE <- startObject(miR = miR, mRNA = mRNA)
+#' MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 #'
-#' MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
+#' MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
+#'
+#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
 #'
 #' Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
 #'                                      "mmu-miR-27a-3p:Odc1"),
@@ -48,31 +50,13 @@
 #'                 dataType = 'L')
 makeMapp <- function(MAE, filt_df, miR_IDs_adj, dataType){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE. This will store the output of
-                           makeMapp. Please use matrixFilter first.')
+    if (missing(MAE)) stop('MAE is missing. Add MAE. This will store the output of makeMapp. Please use matrixFilter first.')
 
-    if (missing(filt_df)) stop('
-                               filt_df is missing.
-                               Add dataframe of filtered miR-mRNA interactions.
-                               Please use the matrixFilter function first.
-                               Output of matrixFilter should be stored as an
-                               assay within the MAE used in the matrixFilter
-                               function.')
+    if (missing(filt_df)) stop('filt_df is missing. Add dataframe of filtered miR-mRNA interactions. Please use the matrixFilter function first. Output of matrixFilter should be stored as an assay within the MAE used in the matrixFilter function.')
 
-    if (missing(miR_IDs_adj)) stop('
-                                   miR_IDs_adj is missing.
-                                   Add adjusted miR gene ID data. Please use the
-                                   getIdsMirHuman or getIdsMirMouse function
-                                   first. Output of a getIdsMir function should
-                                   be stored as an assay within the MAE used in
-                                   the getIdsMir function.')
+    if (missing(miR_IDs_adj)) stop('miR_IDs_adj is missing. Add adjusted miR gene ID data. Please use the getIdsMir function first. Output of a getIdsMir function should be stored as an assay within the MAE used in the getIdsMir function.')
 
-    if (missing(dataType)) stop('
-                                dataType is missing.
-                                Add a string. "En" for ensembl or "L"
-                                for entrez.')
+    if (missing(dataType)) stop('dataType is missing. Add a string. "En" for ensembl or "L" for entrez.')
 
     # Merge filtered data frame of interactions and adjusted miR IDs
     X <- merge(x = filt_df, y = miR_IDs_adj, by.x = "miR", by.y = "GENENAME")

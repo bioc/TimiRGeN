@@ -21,15 +21,15 @@
 #' @examples
 #'library(org.Mm.eg.db)
 #'
-#' miR <- mm_miR
+#' data(mm_miR)
 #'
-#' mRNA <- mm_mRNA
+#' data(mm_mRNA)
 #'
-#' Data <- startObject(miR = miR, mRNA = mRNA)
+#' Data <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 #'
-#' Data <- getIdsMirMouse(Data, assay(Data, 1))
+#' Data <- getIdsMir(Data, assay(Data, 1), org.Mm.eg.db, 'mmu')
 #'
-#' Data <- getIdsMrnaMouse(Data, assay(Data, 2), mirror = 'useast')
+#' Data <- getIdsMrna(Data, assay(Data, 2), mirror = 'useast', 'mmusculus')
 #'
 #' Data <- combineGenes(MAE = Data, miR_data = assay(Data, 1),
 #'                      mRNA_data = assay(Data, 2))
@@ -49,31 +49,13 @@
 #'                ID_Column = 4)
 eNames <- function(MAE, method, gene_IDs, ID_Column){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MultiAssayExperiment. The results of eNames
-                           will be stored in the MAE. Please use the addIds
-                           function first.')
+    if (missing(MAE)) stop('MAE is missing. Add MultiAssayExperiment. The results of eNames will be stored in the MAE. Please use the addIds function first.')
 
-    if (missing(method)) stop('
-                               method is missing.
-                               Please add method "c" for combined analysis
-                               or "s" for separated analysis.')
+    if (missing(method)) stop('method is missing. Please add method "c" for combined analysis or "s" for separated analysis.')
 
-    if (missing(gene_IDs)) stop('
-                                 gene_IDs is missing.
-                                 Add a list of nested dataframes with
-                                 entrezID/ ensembl gene name information.
-                                 Please use the addIDs function first. Output
-                                 of the addIds function will be stored as
-                                 metadata of the MAE used in the addIds
-                                 function.')
+    if (missing(gene_IDs)) stop('gene_IDs is missing. Add a list of nested dataframes with entrezID/ ensembl gene name information. Please use the addIDs function first. Output of the addIds function will be stored as metadata of the MAE used in the addIds function.')
 
-    if (missing(ID_Column)) stop('
-                                  ID_Column is missing.
-                                  Add an integer representing the column which
-                                  contains gene ID information. This should be
-                                  2+ the number of DE results per time point.')
+    if (missing(ID_Column)) stop('ID_Column is missing. Add an integer representing the column which contains gene ID information. This should be 2+ the number of DE results per time point.')
 
     metadata <- `metadata<-` <- NULL
 

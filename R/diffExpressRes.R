@@ -41,9 +41,9 @@
 #'
 #' MAE <- startObject(miR = miR, mRNA = mRNA)
 #'
-#' MAE <- getIdsMirMouse(MAE, assay(MAE, 1))
+#' MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
 #'
-#' MAE <- getIdsMrnaMouse(MAE, assay(MAE, 2), "useast")
+#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
 #'
 #' MAE <- diffExpressRes(MAE, df = assay(MAE, 2), dataType = 'Log2FC',
 #'                      genes_ID = assay(MAE, 7),
@@ -52,38 +52,15 @@
 diffExpressRes <- function(MAE, df, dataType, genes_ID, idColumn = 'GENENAME',
                            name){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add a MAE. This will store output from diffExpressRes
-                           . Please use the startObject and getIds functions
-                           first.')
+    if (missing(MAE)) stop('MAE is missing. Add a MAE. This will store output from diffExpressRes. Please use the startObject and getIds functions first.')
 
-    if (missing(df)) stop('
-                          df is missing.
-                          Add miR or mRNA dataframe which contains genes
-                          and results from DE. Please use the startObject
-                          function before diffExpressRes. Results of
-                          startObject will be found as assays in the MAE used
-                          in the startObject function.')
+    if (missing(df)) stop('df is missing. Add miR or mRNA dataframe which contains genes and results from DE. Please use the startObject function before diffExpressRes. Results of startObject will be found as assays in the MAE used in the startObject function.')
 
-    if (missing(dataType)) stop('
-                                 dataType is missing.
-                                 Add string to represent a common result from
-                                 DE e.g "AveExp", "Log2fc".')
+    if (missing(dataType)) stop('dataType is missing. Add string to represent a common result from DE e.g "AveExp", "Log2fc".')
 
-    if (missing(genes_ID)) stop('
-                                genes_ID is missing.
-                                Add dataframe from getIDs functions.
-                                One column name is named "GENENAME", the other
-                                contain entrez or ensembl IDs. Please use
-                                getIdsMir and getIdsMrna functions first.
-                                Output of getIds functions will be stored as
-                                assays in the MAE used in the getIds function.')
+    if (missing(genes_ID)) stop('genes_ID is missing. Add dataframe from getIDs functions. One column name is named "GENENAME", the other contain entrez or ensembl IDs. Please use getIdsMir and getIdsMrna functions first. Output of getIds functions will be stored as assays in the MAE used in the getIds function.')
 
-    if (missing(name)) stop('
-                            name is missing.
-                            Add name of new data frame. This should be a unique
-                            string.')
+    if (missing(name)) stop('name is missing. Add name of new data frame. This should be a unique string.')
 
     df <- as.data.frame(df)
 

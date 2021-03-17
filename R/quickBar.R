@@ -27,7 +27,7 @@
 #'
 #' metadata(MAE)[["e_list"]] <- e_list_mouse
 #'
-#' MAE <- dloadGmt(MAE, speciesInitial = "Mm")
+#' MAE <- dloadGmt(MAE, species = "Mus musculus")
 #'
 #' MAE <- enrichWiki(MAE = MAE, method = 'c', ID_list = metadata(MAE)[[1]],
 #'                    orgDB = org.Mm.eg.db, path_gene = assay(MAE, 1),
@@ -39,20 +39,9 @@
 #' # to view bar plot enter plot(q)
 quickBar <- function(X, Y){
 
-    if (missing(X)) stop('
-                         X is missing.
-                         Input nested dataframe which is output from
-                         enrichWiki. Should be in the metadata of the MAE used
-                         in the enrichWiki function, and this can be retrieved
-                         using metadata(MAE)[[i]][[j]].')
+    if (missing(X)) stop('X is missing. Input nested dataframe which is output from enrichWiki. Should be in the metadata of the MAE used in the enrichWiki function, and this can be retrieved using metadata(MAE)[[i]][[j]].')
 
-    if (missing(Y)) stop('
-                         Y is missing.
-                         Input name of the nested dataframe associated with X.
-                         This is output from enrichWiki. Should be in the
-                         metadata of the MAE used in the enrichWiki function,
-                         and this can be retrieved using metadata(MAE)[[i]][j].
-                         ')
+    if (missing(Y)) stop('Y is missing. Input name of the nested dataframe associated with X. User can add any character.')
 
   Description <- Count <- NULL
 
@@ -70,7 +59,7 @@ quickBar <- function(X, Y){
            x = "Wikipathways",
            fill = "p.adjust") +
 
-      ggtitle(names(Y)) +
+      ggtitle(Y) +
 
       theme(plot.title = element_text(size=30, face = "bold", hjust = 0.5),
             legend.key.size = unit(5, "line"),

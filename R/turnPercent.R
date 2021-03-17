@@ -29,25 +29,11 @@
 #'                    rowInt = 6)
 turnPercent <- function(MAE, wikiMatrix, rowInt){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE. Output of turnPercent will be
-                           stored within this MAE. Please use wikiMatrix first.
-                           ')
+    if (missing(MAE)) stop('MAE is missing. Add MAE. Output of turnPercent will be stored within this MAE. Please use wikiMatrix first.')
 
-    if (missing(wikiMatrix)) stop('
-                                  wikiMatrix is missing.
-                                  Add matrix of wikipathways and samples.
-                                  Please use the wikiMatrix function before
-                                  using turnPercent. Output of wikiMatrix
-                                  should be stored as an assay within the MAE
-                                  used in the wikiMatrix function.')
+    if (missing(wikiMatrix)) stop('wikiMatrix is missing. Add matrix of wikipathways and samples. Please use the wikiMatrix function before using turnPercent. Output of wikiMatrix should be stored as an assay within the MAE used in the wikiMatrix function.')
 
-    if (missing(rowInt)) stop('
-                              rowInt is missing.
-                              Add an integer which represents the row that
-                              contains the total number of genes. Should be
-                              1+ the total number of samples.')
+    if (missing(rowInt)) stop('rowInt is missing. Add an integer which represents the row that contains the total number of genes. Should be 1+ the total number of samples.')
 
     df1 <- as.matrix(wikiMatrix)
 

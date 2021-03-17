@@ -36,11 +36,7 @@
 #'quickNet(metadata(MAE)[[1]])
 quickNet <- function(net){
 
-    if(missing(net)) stop('
-                          net is missing.
-                          Add igraph object. Please use the makeNet function.
-                          The output of makeNet should be stored as metadata
-                          within the MAE used in the makeNet function.')
+    if(missing(net)) stop('net is missing. Add igraph object. Please use the makeNet function. The output of makeNet should be stored as metadata within the MAE used in the makeNet function.')
 
     # Set network colours and features
     igraph::V(net)$color <- ifelse(igraph::V(net)$genetype == "mRNA",

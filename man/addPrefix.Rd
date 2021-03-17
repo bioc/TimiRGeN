@@ -28,11 +28,11 @@ This function is essential for separate analysis of miR-mRNA DE data. If
 using the combined analysis, there is no need to use addPrefix.
 }
 \examples{
-miR <- mm_miR
+data(mm_miR)
 
-mRNA <- mm_mRNA
+data(mm_mRNA)
 
-MAE <- startObject(miR = miR, mRNA = mRNA)
+MAE <- startObject(miR = mm_miR, mRNA = mm_mRNA)
 
 MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 1),
                  prefixString = "miR")

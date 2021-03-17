@@ -17,34 +17,18 @@
 savePlots <- function(largeList, maxInt, quickType, fileType, width=22,
                       height=13){
 
-    if (missing(largeList)) stop('
-                                 largeList is missing.
-                                 Add large list of nested dataframe. This
-                                 is the output from the enrichWiki function and
-                                 should be stored as metadata of the MAE used
-                                 in the enrichWiki function.')
+    if (missing(largeList)) stop('largeList is missing. Add large list of nested dataframe. This is the output from the enrichWiki function and should be stored as metadata of the MAE used in the enrichWiki function.')
 
-    if (missing(maxInt)) stop('
-                              maxInt is missing.
-                              Add number of samples your data has.
-                              Should be an integer')
+    if (missing(maxInt)) stop('maxInt is missing. Add number of samples your data has. Should be an integer')
 
-    if (missing(quickType)) stop('
-                                 quickType is missing.
-                                 Add type of plot. quickBar for a bar plot
-                                 or quickDot for a dot plot.')
-
-    if (missing(fileType)) stop('
-                                 fileType is missing.
-                                 Input the type of file to be saved either
-                                 "png", "tiff", "svg" or "jpeg".')
+    if (missing(quickType)) stop('quickType is missing. Add type of plot. quickBar for a bar plot or quickDot for a dot plot.')
 
   # create empty list
   plot_list <- list()
 
   # create plot object
   for (i in seq_len(maxInt)) {
-    p <- quickType(X = largeList[[i]]@result, Y = largeList[i])
+    p <- quickType(X = largeList[[i]]@result, Y = names(largeList[i]))
     plot_list[[i]] = p
 
   }
@@ -75,6 +59,6 @@ savePlots <- function(largeList, maxInt, quickType, fileType, width=22,
       print(plot_list[[i]])
       dev.off()
 
-    } else ("Input relevant file type for export: tiff, png, svg or jpeg")
+    } else {print("Input relevant file type for export: tiff, png, svg or jpeg")}
   }
 }

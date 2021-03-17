@@ -33,18 +33,9 @@
 #'MAE <- makeNet(MAE, Filt_df)
 makeNet <- function(MAE, filt_df){
 
-    if (missing(MAE)) stop('
-                           MAE is missing.
-                           Add MAE. This will store the output of
-                           makeNet Please use matrixFilter first.')
+    if (missing(MAE)) stop('MAE is missing. Add MAE. This will store the output of makeNet Please use matrixFilter first.')
 
-    if (missing(filt_df)) stop('
-                               filt_df is missing.
-                               Add filtered miR-mRNA interaction dataframe.
-                               Please use the matrixFilter function first.
-                               The output of matrixFilter should be stored
-                               as an assay within the MAE used in the
-                               matrixFilter function.')
+    if (missing(filt_df)) stop('filt_df is missing. Add filtered miR-mRNA interaction dataframe. Please use the matrixFilter function first. The output of matrixFilter should be stored as an assay within the MAE used in the matrixFilter function.')
 
     metadata <- `metadata<-` <- NULL
 
