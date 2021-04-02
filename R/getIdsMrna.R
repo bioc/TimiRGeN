@@ -29,7 +29,8 @@ getIdsMrna <- function(MAE, mRNA, mirror = 'www', species){
 
     if (missing(mRNA)) stop('mRNA is missing. Add mRNA dataframe. Please use startObject first. The output of startObject will be stored as an assay within the MAE used in the startObject function.')
 
-    if (missing(species)) stop('species is missing. Add species of interest e.g. mmusculus, hsapiens')
+    if (missing(species)) stop('species is missing. Add species of interest e.g. "mmusculus", "hsapiens"')
+
     # Get a  mart
     mart <- suppressMessages(biomaRt::useEnsembl("ensembl",
                                                 dataset=paste0(species,

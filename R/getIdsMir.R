@@ -39,7 +39,7 @@ getIdsMir <- function(MAE, miR, orgDB, miRPrefix){
 
     if(missing(orgDB)) stop('orgDB is missing. Add org.xx.eg.db package which is relevant for the analysis.');
 
-    if(missing(miRPrefix)) stop('miRPrefix is missing. Add microRNA prefix e.g. mmu for mouse or rno for rat.');
+    if(missing(miRPrefix)) stop('miRPrefix is missing. Add microRNA prefix e.g. "mmu" for mouse or "rno" for rat.');
 
         miR$Genes <- miR$MicroRNA <- rownames(miR)
 

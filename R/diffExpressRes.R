@@ -3,8 +3,7 @@
 #' for only one result type, along with an ID of choice. It is recommended to
 #' use this function on a DE results which represents abundance such as log2fc
 #' or average expression, as this data will be averaged and correlated later in
-#' the analysis.
-#' This is to be used for miR and mRNA data individually.
+#' the analysis. This is to be used for miR and mRNA data individually.
 #' @param MAE MultiAssayExperiment to store the output of diffExpressRes
 #' within it. This function is to be used after pathways of interest have been
 #' identified by enrichWiki or returnCluster. It is recommended to
@@ -24,7 +23,7 @@
 #' @param idColumn Name of column to use as the merge point. If Column names in
 #' getIds results have not been changed, it should be "GENENAME". Default has
 #' been left as "GENENAME".
-#' @param name = New name of the assay. Should be a unique string. Remember
+#' @param name New name of the assay. Should be a unique string. Remember
 #' each assay in a MAE must have a unique name.
 #' @return Dataframe with only a single result type from DE (e.g. Log2FC) and
 #' an ID type e.g. entrezIDs. Output will be stored as an assay in the input

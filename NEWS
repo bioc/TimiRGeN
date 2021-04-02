@@ -312,5 +312,23 @@ TimiRGeN v1.0.3 (Date: 25/01/2021)
 * Editted vignette to correpsond to changes.
 * Fixed bug in test_significantVals_c.
 * Added more image option parameters for to quickFuzz.
-* Fixed dloadMirtTarBase bug. Now it will load faster.
-* Cleaned up wording of in-function parameter text.
+
+TimiRGeN v1.0.4 (Date: 29/03/2021)
+===============================
+* MAJOR UPDATES
+* Added new functions for longitudinal miRNA-mRNA pair analysis:
+pickPair, quickCrossCorr, quickMap, quickTC.
+* Added new functions for clustering of genes involved in miRNA-mRNAs
+interactions: clustPrep, hClustPrep, quickDendro, quickDMap, quickHClust,
+quickPathwayTC.
+* Added new functions for miRNA-mRNA pair regression and multi interaction
+regression: getP, multiReg, linearReg, quickReg, quickTCPred.
+* Added new functions to accomidate input data that has not been analysed with
+pair-wise differential expression analysis: createClusters2, clusterList.
+* Altered functions to accomidate nput data that has not been analysed with
+pair-wise differential expression analysis: quickFuzz.
+* Removed unneeded/ awkward functions: quickDot.
+* Added pathwayname parametere to quickNet.
+* Updated vignette with two new sections for alterative analysis methods:
+for non-pairwise DE and for multivariate datasets.
+* Removed unncecassary parameter calls in eNames and turnPercent functions.

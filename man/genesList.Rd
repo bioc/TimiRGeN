@@ -20,7 +20,7 @@ and will be stored as an assay within the MAE used in the combineGenes
 function.}
 
 \item{timeString}{If "c", this should be a common string representing
-'timepoints' e.g. for H.1, H.10, H.20, timeString = 'H'.}
+'timepoints' e.g. for H.1, H.10, H.20, timeString = "H".}
 
 \item{miR_data}{If "s", a dataframe of microRNA data. Rownames are genes
 and colnames are: genetype_timepoint.resulttype. Column names should be

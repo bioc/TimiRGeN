@@ -22,7 +22,7 @@
 #' and will be stored as an assay within the MAE used in the combineGenes
 #' function.
 #' @param timeString If "c", this should be a common string representing
-#' 'timepoints' e.g. for H.1, H.10, H.20, timeString = 'H'.
+#' 'timepoints' e.g. for H.1, H.10, H.20, timeString = "H".
 #' @param miR_data If "s", a dataframe of microRNA data. Rownames are genes
 #' and colnames are: genetype_timepoint.resulttype. Column names should be
 #' the same in mRNA and miR data. miR_data is from the addPrefix function,
@@ -108,25 +108,9 @@ genesList <- function(MAE, method, genetic_data, timeString, miR_data,
         return(MAE)
 
     } else if (method == 's') {
-        if (missing(miR_data)) stop('
-                                    miR_data is missing.
-                                    Input miR data with prefixes.
-                                    Colnames structure should be
-                                    genetype_timepoint.resulttype.
-                                    Please use the addPrefix function first.
-                                    Output of the addPrefix function should be
-                                    stored as an assay within the MAE used in
-                                    the addPrefix function.')
+        if (missing(miR_data)) stop('miR_data is missing. Input miR data with prefixes. Colnames structure should be genetype_timepoint.resulttype. Please use the addPrefix function first. Output of the addPrefix function should be stored as an assay within the MAE used in the addPrefix function.')
 
-        if (missing(mRNA_data)) stop('
-                                    mRNA_data is missing.
-                                    Input mRNA data with prefixes.
-                                    Colnames structure should be
-                                    genetype_timepoint.resulttype.
-                                    Please use the addPrefix function first.
-                                    Output of the addPrefix function should be
-                                    stored as an assay within the MAE used in
-                                    the addPrefix function.')
+        if (missing(mRNA_data)) stop('mRNA_data is missing. Input mRNA data with prefixes. Colnames structure should be genetype_timepoint.resulttype. Please use the addPrefix function first. Output of the addPrefix function should be stored as an assay within the MAE used in the addPrefix function.')
 
 
         # get data from MAE object

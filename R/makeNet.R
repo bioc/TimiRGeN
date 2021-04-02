@@ -17,7 +17,7 @@
 #' @examples
 #' Filt_df <- data.frame(row.names = c("mmu-miR-320-3p:Acss1",
 #'                                      "mmu-miR-27a-3p:Odc1"),
-#'                       avecor = c(-0.9191653, 0.7826041),
+#'                       corr = c(-0.9191653, 0.7826041),
 #'                       miR = c("mmu-miR-320-3p", "mmu-miR-27a-3p"),
 #'                       mRNA = c("Acss1", "Acss1"),
 #'                       miR_Entrez = c(NA, NA),
@@ -76,7 +76,7 @@ makeNet <- function(MAE, filt_df){
     links <- data.frame(from = nodes$id[seq_len(halfway)],
                         to = nodes$id[-c(seq_len(halfway))],
                         Databases = filt_df$Pred_Fun,
-                        Correlation = filt_df$avecor,
+                        Correlation = filt_df$corr,
                         type = "hyperlink")
 
     nodes <- nodes[! duplicated(nodes$genes),]

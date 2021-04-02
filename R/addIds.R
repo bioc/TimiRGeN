@@ -21,7 +21,7 @@
 #' @export
 #' @usage addIds(MAE, method, filtered_genelist, miR_IDs, mRNA_IDs)
 #' @examples
-#'library(org.Mm.eg.db)
+#' library(org.Mm.eg.db)
 #'
 #' data(mm_miR)
 #'
@@ -54,9 +54,9 @@ addIds <- function(MAE, method, filtered_genelist, miR_IDs, mRNA_IDs){
 
     if (missing(filtered_genelist)) stop('filtered_genelist is missing. Add filtered list of genes which is listed by genetype and time (s) or just by time (c). Please use significantVals first. Output of significantVals should be stored as metadata within the MAE used in the significantVals function.')
 
-    if (missing(miR_IDs)) stop('miR_IDs is missing. Add dataframe of miR gene IDs. Please use getIdsMirHuman or getIdsMirMouse first. Output of a getIdsMir function should be stored as assays within the MAE used in the getIdsMir function.')
+    if (missing(miR_IDs)) stop('miR_IDs is missing. Add dataframe of miR gene IDs. Please use getIdsMir first. Output of a getIdsMir function should be stored as assays within the MAE used in the getIdsMir function.')
 
-    if (missing(mRNA_IDs)) stop('mRNA_IDs is missing. Add dataframe of mRNA gene IDs. Please use getIdsMrnaHuman or getIdsMrnaMouse first. Output of getIds function should be stored as an assay within the MAE used in the getIdsMrna function.')
+    if (missing(mRNA_IDs)) stop('mRNA_IDs is missing. Add dataframe of mRNA gene IDs. Please use getIds first. Output of getIds function should be stored as an assay within the MAE used in the getIdsMrna function.')
 
     metadata <- `metadata<-` <- NULL
 

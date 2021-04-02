@@ -14,21 +14,21 @@
 #' @usage dloadMirtarbase(MAE, species)
 #' @importFrom readxl read_excel
 #' @examples
-#' \dontrun{
-#'
 #' MAE <- MultiAssayExperiment()
 #'
 #' MAE <- dloadMirtarbase(MAE, "mmu")
 #'
-#' }
 dloadMirtarbase <- function(MAE, species){
 
   if (missing(MAE)) stop('MAE is missing. Add MultiAssayExperiment so data from dloadMirtarbase can be stored. Please use the mirMrnaInt function first.')
 
   if (missing(species)) stop('species is missing. Add initials of the species of interest e.g "hsa" or "mmu."')
 
+
+  miRTarBase <- miRNA <- NULL
+
   # Retreive data
-  data("miRTarBase")
+  miRTarBase <- TimiRGeN::miRTarBase
 
   # Extract species specific data
   miRTarBase_s <- miRTarBase %>% dplyr::filter(stringr::str_detect(miRNA, species))
