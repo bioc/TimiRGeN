@@ -147,7 +147,7 @@ found on the MultiAssayExperiment [bioconductor page](https://bioconductor.org/p
 ```{r retrieveID data for mm data, warning=FALSE, message=FALSE}
 MAE <- getIdsMir(MAE = MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, miRPrefix = 'mmu')
 
-MAE <- getIdsMrna(MAE = MAE, assay(MAE, 2), mirror = 'useast', species = 'mmusculus')
+MAE <- getIdsMrna(MAE = MAE, assay(MAE, 2), mirror = 'useast', species = 'mmusculus', orgDB = org.Mm.eg.db)
 ```
 
 Using `getIds` functions will produce dataframes containing entrezgene and ensembl ID annotations for genes. This is useful for downstream analysis.
@@ -155,7 +155,9 @@ Using `getIds` functions will produce dataframes containing entrezgene and ensem
 Due to the nature of miRs, many NAs may be found in the output of `getIdsMir` functions. Entrezgene IDs and ensemble IDs are insensitive to miRs with -3p and -5p strands. Therefore, adjusted entrezgene IDs and ensemble IDs are also created.
 
 Note. For `getIdsMrna` functions, if a connection time out error occurs or if
-downloads are very slow, try to use other mirrors e.g. `mirror = "useast"`.
+downloads are very slow, try to use other mirrors e.g. `mirror = "useast"`. 
+Incase `BiomaRt` servers do not connect, `clusterProfiler` will be used instead.
+Generally, the former method finds more annotations.
 
 ## Filter Out Non-significant Genes
 
@@ -418,7 +420,8 @@ interaction between the `GenesofInterest` created from `wikiMrna` and all the
 input miRs.
 
 The `maxInt` parameter must be equal to the number of time points in the input 
-data.
+data. The `corMeth` option allows users to select between pearson, spearman or
+kendall, default being pearson.
 
 ## Download miR-mRNA Interaction Database Data
 
@@ -518,7 +521,7 @@ Note. Adjustments to the size of the plot window may be needed to access the key
 Note. Having too many interactions will be very difficult to see in R, so
 it's recommend exporting this data into Cytoscape in these cases.
 
-Note. Filtered miR-mRNA interactions must consist of at least 2 miR-mRNA interactions or this plot will not work and input time series must have at least 3 time points.
+Note. Filtered miR-mRNA interactions must consist of at least two miR-mRNA interactions or this plot will not work and input time series must have at least three time points.
 
 ## Hierarchical clustering of genes found in pathways of interest
 
@@ -562,7 +565,9 @@ examples 3 (`k`) clusters were created.
 ## Correlation and Cross Correlation analysis of miRNA:mRNA pairs
 
 For analysis of individual miRNA-mRNA interactions, TimiRGeN provides options
-to generate correlation plots and cross-correlation plots.
+to generate correlation plots and cross-correlation plots. These pair analysis
+methods is ideal for longer time courses with at least five time points. Shorter
+time series are not appropriate and warning messages will display this.
 
 ```{r corranalysis, message=FALSE, warning=FALSE, eval=FALSE}
 quickMap(filt_df = assay(MAE3, 6), numpairs = 11)
@@ -732,7 +737,7 @@ MAE <- startObject(hs_miR, hs_mRNA)
 
 MAE <- getIdsMir(MAE = MAE, assay(MAE, 1), orgDB = org.Hs.eg.db, miRPrefix = 'hsa')
 
-MAE <- getIdsMrna(MAE = MAE, assay(MAE, 2), mirror = 'useast', species = 'hsapiens')
+MAE <- getIdsMrna(MAE = MAE, assay(MAE, 2), mirror = 'useast', species = 'hsapiens', orgDB = org.Hs.eg.db)
 ```
 
 ## Differentiate Data
@@ -837,7 +842,7 @@ load("../inst/extdata/w_list_human.rda")
 metadata(MAE2)[['wikilist']] <- w_list_human
 ```
 
-```{r create_percent_matrix, warning=FALSE, message=FALSE}
+```{r create_percent_matrix, warning=FALSE, message=FALSE, eval=FALSE}
 MAE2 <- wikiMatrix(MAE = MAE2, ID_list = metadata(MAE)[[4]],
                    wp_list = metadata(MAE2)[[2]])
 
@@ -882,7 +887,7 @@ data("mm_mRNA")
 
 Data <- startObject(miR = NULL, mRNA = mm_mRNA)
 
-Data <- getIdsMrna(MAE = Data, mRNA = assay(Data, 2), mirror = 'useast',                          species = 'mmusculus')
+Data <- getIdsMrna(MAE = Data, mRNA = assay(Data, 2), mirror = 'useast',                          species = 'mmusculus', orgDB = org.Mm.eg.db)
 
 Data <- genesList(Data, 
                   method = 'c',
@@ -939,7 +944,7 @@ MAE <- getIdsMir(MAE = MAE, miR = MAE[[1]], orgDB = org.Hs.eg.db,
                  miRPrefix = "hsa")
 
 MAE <- getIdsMrna(MAE = MAE, mRNA = MAE[[2]], mirror = "www",
-                  species = "hsapiens")
+                  species = "hsapiens", orgDB = org.Hs.eg.db)
 
 MAE <- combineGenes(MAE = MAE, miR_data = MAE[[1]], mRNA_data = MAE[[2]])
 
@@ -985,7 +990,7 @@ MAE <- getIdsMir(MAE = MAE, miR = MAE[[1]], orgDB = org.Hs.eg.db,
                  miRPrefix = "hsa")
 
 MAE <- getIdsMrna(MAE = MAE, mRNA = MAE[[2]], mirror = "www",
-                  species = "hsapiens")
+                  species = "hsapiens", orgDB = org.Hs.eg.db)
 
 MAE <- combineGenes(MAE = MAE, miR_data = MAE[[1]], mRNA_data = MAE[[2]])
 
@@ -1040,7 +1045,11 @@ knitr::include_graphics("reg1.png")
 knitr::include_graphics("reg2.png")
 ```
 
-It seems we can be confident that the `Ifg1-mmu-miR-18a-5p` interaction has stronger relationship in the FA dataset, than in the UUO dataset due to the higher odd-ratio and the lower range of the 95% confidence intervals.
+It seems we can be confident that the `Ifg1-mmu-miR-18a-5p` interaction has stronger relationship in the FA dataset than in the UUO dataset due to the higher odd-ratio and the lower range of the 95% confidence intervals.
+
+Notably this example also shows warnings from the UUO dataset because it only
+has three time points. Such datasets will produce warning messages when users
+try to perform cross-correlation analysis, interpolation and regression analysis.
 
 # References
 

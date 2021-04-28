@@ -26,15 +26,15 @@
 #' @examples
 #' library(org.Mm.eg.db)
 #'
-#' miR <- mm_miR[1:100,]
+#' miR <- mm_miR[1:50,]
 #'
-#' mRNA <- mm_mRNA[1:200,]
+#' mRNA <- mm_mRNA[1:100,]
 #'
 #' MAE <- startObject(miR = miR, mRNA = mRNA)
 #'
 #' MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
 #'
-#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
+#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus', orgDB = org.Mm.eg.db)
 #'
 #' MAE <- diffExpressRes(MAE, df = assay(MAE, 1), dataType = 'Log2FC',
 #'                      genes_ID = assay(MAE, 3),
@@ -67,12 +67,24 @@
 quickCrossCorr <- function(filt_df, pair, miRNA_exp, mRNA_exp, scale=FALSE,
                            Interpolation=FALSE, timecourse){
 
+  x <- miRNA_exp
+
+  x$ID <- NULL
+
+  if(length(colnames(x)) < 5) {
+    print('Warning: Fewer than five time points detected. This dataset is not suitable for cross-correlation analysis!')
+  }
+
   Int <- pickPair(filt_df, pair, miRNA_exp, mRNA_exp, scale)
 
 
   if (Interpolation == TRUE) {
 
     if (missing(timecourse)) stop('timecourse is missing. How many time points to interpolate over? This should be the whole time course.')
+
+    if(length(colnames(x)) < 5) {
+      print('Warning: Fewer than five time points detected. This dataset is not suitable for interpolation analysis!')
+    }
 
     Int <- FreqProf::approxm(as.data.frame(Int), timecourse,
 

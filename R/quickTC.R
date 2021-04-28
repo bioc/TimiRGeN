@@ -20,16 +20,16 @@
 #' @importFrom FreqProf approxm
 #' @examples
 #' library(org.Mm.eg.db)
-#' 
-#' miR <- mm_miR[1:100,]
-#' 
-#' mRNA <- mm_mRNA[1:200,]
+#'
+#' miR <- mm_miR[1:50,]
+#'
+#' mRNA <- mm_mRNA[1:100,]
 #'
 #' MAE <- startObject(miR = miR, mRNA = mRNA)
 #'
 #' MAE <- getIdsMir(MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, 'mmu')
-#' 
-#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus')
+#'
+#' MAE <- getIdsMrna(MAE, assay(MAE, 2), "useast", 'mmusculus', orgDB = org.Mm.eg.db)
 #'
 #' MAE <- diffExpressRes(MAE, df = assay(MAE, 1), dataType = 'Log2FC',
 #'                      genes_ID = assay(MAE, 3),
@@ -64,11 +64,27 @@ quickTC <- function(filt_df, pair, miRNA_exp, mRNA_exp, scale=FALSE,
 
   Time <- Expression <- Gene <- NULL
 
+  x <- miRNA_exp
+
+  x$ID <- NULL
+
+  if(length(colnames(x)) < 5) {
+    print('Warning: Fewer than five time points detected. Correlation results may be overestimated!')
+  }
+
   Int <- pickPair(filt_df, pair, miRNA_exp, mRNA_exp, scale)
 
   if (Interpolation == TRUE) {
 
     if (missing(timecourse)) stop('timecourse is missing. How many time points to interpolate over? This should be the whole time course.')
+
+    x <- miRNA_exp
+
+    x$ID <- NULL
+
+    if(length(colnames(x)) < 5) {
+      print('Warning: Fewer than five time points detected. This dataset is not suitable for interpolation analysis!')
+    }
 
     Int <- FreqProf::approxm(as.data.frame(Int), timecourse,
 
@@ -94,19 +110,19 @@ quickTC <- function(filt_df, pair, miRNA_exp, mRNA_exp, scale=FALSE,
 
   colnames(Melted)[3] <- "Expression"
 
-  miR <- unique(Melted$Gene)[[1]]
+  miR <- as.character(unique(Melted$Gene)[[1]])
 
-  mRNA <- unique(Melted$Gene)[[2]]
+  mRNA <- as.character(unique(Melted$Gene)[[2]])
+
+  Melted$Gene <- factor(Melted$Gene, levels = c(mRNA, miR)) # define order/levels
 
   ggplot(Melted, aes(x = Time, y = Expression, group = Gene, color = Gene)) +
 
-    geom_line(data = ~ subset(., Gene == paste(miR)), size =2) +
+    geom_line(size = 3) + # simplified
 
-    geom_line(data = ~ subset(., Gene == paste(mRNA)), size = 2) +
+    scale_colour_manual(values = c("Red", "Blue")) +
 
-    scale_colour_manual(values=c("Red", "Blue"))+
-
-    theme_classic()+
+    theme_classic() +
 
     labs(title= paste0(miR, ":", mRNA, " Expression"),
 

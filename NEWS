@@ -313,7 +313,7 @@ TimiRGeN v1.0.3 (Date: 25/01/2021)
 * Fixed bug in test_significantVals_c.
 * Added more image option parameters for to quickFuzz.
 
-TimiRGeN v1.0.4 (Date: 29/03/2021)
+TimiRGeN v1.0.4 (Date: 02/04/2021)
 ===============================
 * MAJOR UPDATES
 * Added new functions for longitudinal miRNA-mRNA pair analysis:
@@ -333,7 +333,37 @@ pair-wise differential expression analysis: quickFuzz.
 for non-pairwise DE and for multivariate datasets.
 * Removed unncecassary parameter calls in eNames and turnPercent functions.
 
-TimiRGeN v1.0.5 (Date: 16/04/2021)
+TimiRGeN v1.1.5 (Date: 09/04/2021)
 ===============================
-* Removed test_returnClusters due to R 4.1 error.
-* Added rmarkdown to Suggested packages in DESCRIPTION file.
+* Minor bug fix for R 4.1 - current developmental version. Lines 841-845 of the vignette were leading to unkown errors during vignette building on Bioconductor.
+
+TimiRGeN v1.1.6 (Date: 12/04/2021)
+===============================
+* Minor bug fix for R 4.1 - current developmental version. returnClusters test file had a bug releted to S4Vectors. This file was removed.
+* Corrected typo on vignette.
+
+TimiRGeN v1.0.5(R) |TimiRGeN v1.1.7(D) (Date: 16/04/2021)
+===============================
+* Added rmarkdown to Suggested packages in the DESCRIPTION file.
+
+TimiRGeN v1.1.8 (Date: 25/04/2021)
+===============================
+* getIdsMrna now has a back-up system in place. If biomaRt connection cannot
+be established, then clusterprofiler will be used instead. Methods will be
+stated to users.
+* quickTC code has been simplified and gene ordering bug is now fixed.
+* Vignette has been updated to account for new getIdMrna back-up.
+* Fewer genes will be used in example codes to reduce the usage of biomaRt
+servers.
+
+TimiRGeN v1.0.6(R) | v1.1.81(D) (Date: 28/04/2021)
+===============================
+* Changed colour scheme of quickMap. Now it shows correlation scores more
+clearly. Also numbered the pairs to make selection easier for users.
+* Added correlation methods (pearson, spearman, kendall) as options when using
+mirMrnaInt function.
+* Added warnings when users are attempting to use cross-correlation,
+interpolation and regression analyses methods while using a dataset with <5
+time points. This is to stop over-estimations.
+* Descibed these updates in the vignette.
+* Re-added the vignette.
