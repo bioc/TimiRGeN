@@ -24,8 +24,7 @@ dloadTargetscan <- function(MAE, species){
   if (missing(species)) stop('species is missing. Add initials of the species of interest e.g "hsa" or "mmu".')
 
   # download file
-  download.file(paste("http://www.targetscan.org/vert_72/vert_72_data_download/",
-                      "Predicted_Targets_Context_Scores.default_predictions.txt.zip",
+  download.file(paste("https://www.targetscan.org/vert_80/vert_80_data_download/Predicted_Targets_Context_Scores.default_predictions.txt.zip",
                       sep = ''), 'Targetscans.zip')
 
   # unzip and then remove zipped file

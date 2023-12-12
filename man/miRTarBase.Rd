@@ -5,7 +5,7 @@
 miRTarBase dataset
 }
 \description{
-miRTarBase dataset - downloaded from http://mirtarbase.cuhk.edu.cn/php/download.php on 7/03/21. miRNA-mRNA interactions labelled as "weak" have been removed.
+miRTarBase dataset - downloaded from http://mirtarbase.cuhk.edu.cn/php/download.php on 14/11/23. miRNA-mRNA interactions labelled as "weak" have been removed.
 }
 \usage{data("miRTarBase")}
 \format{

@@ -111,7 +111,7 @@ associated miR data was published in
 and this was downloaded from
 [GSE61328](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE61328).
 
-```{r Load mm data}
+```{r Load mm data, echo=TRUE}
 data("mm_miR")
 
 data("mm_mRNA")
@@ -131,7 +131,7 @@ Note. There should be no NAs in your miR and mRNA data files.
 
 ## Create MultiAssayExperiment object
 
-```{r Start MAE, message=FALSE}
+```{r Start MAE, message=FALSE, eval=FALSE}
 MAE <- startObject(mm_miR, mm_mRNA)
 ```
 
@@ -144,7 +144,7 @@ found on the MultiAssayExperiment [bioconductor page](https://bioconductor.org/p
 
 ## Retrieve Gene IDs
 
-```{r retrieveID data for mm data, warning=FALSE, message=FALSE}
+```{r retrieveID data for mm data, warning=FALSE, message=FALSE, eval=FALSE}
 MAE <- getIdsMir(MAE = MAE, assay(MAE, 1), orgDB = org.Mm.eg.db, miRPrefix = 'mmu')
 
 MAE <- getIdsMrna(MAE = MAE, assay(MAE, 2), mirror = 'useast', species = 'mmusculus', orgDB = org.Mm.eg.db)
@@ -161,7 +161,7 @@ Generally, the former method finds more annotations.
 
 ## Filter Out Non-significant Genes
 
-```{r combineGenes + filter, error=FALSE, warning=FALSE}
+```{r combineGenes + filter, error=FALSE, warning=FALSE, eval=FALSE}
 MAE <- combineGenes(MAE = MAE, miR_data = assay(MAE, 1),
                     assay(MAE, 2))
 
@@ -185,7 +185,7 @@ adjusted P value of less than `0.05` would remain in the list.
 
 ### Find Significant Gene IDs
 
-```{r add entrezIDs and extract, warning=FALSE, error=FALSE}
+```{r add entrezIDs and extract, warning=FALSE, error=FALSE, eval=FALSE}
 MAE <- addIds(MAE = MAE, method = 'c',
               filtered_genelist = metadata(MAE)[[2]],
               miR_IDs = assay(MAE, 3),
@@ -209,12 +209,6 @@ Once we have a list of significant genes per time point we can put this through 
 MAE2 <- MultiAssayExperiment()
 
 MAE2 <- dloadGmt(MAE = MAE2, species = "Mus musculus")
-```
-
-```{r downloadGTM working, message=FALSE, warning=FALSE, echo=FALSE}
-# dloadGmt failed on bioconductor vignette build so mm_gmt is added instead
-load(file = "../inst/extdata/mm_gmt.rda")
-MAE2 <- mm_gmt
 ```
 
 This is standard overrepresentation analysis, here the `enrichWiki` function wraps around enrichment functions from DOSE and clusterProfiler [2,3] but applies these functions for time series analysis with WikiPathways.
@@ -280,16 +274,6 @@ MAE2 <- wikiList(MAE2, stringSpecies = 'Mus musculus', stringSymbol = 'L')
 
 This method starts by importing all mouse WikiPathways and associated gene IDs. The `L` symbol will give us entezgene IDs. Use the `En` symbol for ensembl IDs.
 
-```{r wikilist working, echo=FALSE, message=FALSE, warning=FALSE}
-# wikiList takes a large amount of time to complete, so to speed vignette
-# building, w_list_mouse is used.
-metadata(MAE2)[["wp_list"]] <- w_list_mouse
-```
-
-```{r wikiMatrix_Real, message=FALSE, warning=FALSE, echo=FALSE}
-MAE2 <- wikiMatrix(MAE = MAE2, ID_list = metadata(MAE)[[4]],
-                   wp_list = metadata(MAE2)[[1]])
-```
 
 ```{r wikiMatrix_Show, message=FALSE, warning=FALSE, eval=FALSE}
 MAE2 <- wikiMatrix(MAE = MAE2, ID_list = metadata(MAE)[[4]],
@@ -300,7 +284,7 @@ MAE2 <- wikiMatrix(MAE = MAE2, ID_list = metadata(MAE)[[4]],
 (rows) and each pathway (columns). A final row representing the total number of
 genes in each pathway is added to the bottom of the matrix.
 
-```{r Percent, message=FALSE, warning=FALSE}
+```{r Percent, message=FALSE, warning=FALSE, eval=FALSE}
 MAE2 <- turnPercent(MAE = MAE2, wikiMatrix = assay(MAE2, 4))
 ```
 
@@ -312,25 +296,6 @@ MAE2 <- turnPercent(MAE = MAE2, wikiMatrix = assay(MAE2, 4))
 MAE2 <- createClusters(MAE = MAE2, method = "c",
                        percentMatrix = assay(MAE2, 5),
                        noClusters = 4, variance = 0.99)
-```
-
-
-```{r createClusters working, fig.align ="center",dpi=80, echo=FALSE}
-# The createClusters function downloads data from the internet so it cannot
-# pass bioconductor vignette building. For this reason clusterdata, mfuzzdata
-# and clusters is imported from extdata.
-
-load("../inst/extdata/clusterdata.rda")
-
-load("../inst/extdata/mfuzzdata.rda")
-
-MAEx <- MultiAssayExperiment(list('ClusterData' = clusterdata,
-                                  'MuzzData' = mfuzzdata))
-MAE2 <- c(MAE2, MAEx)
-
-load("../inst/extdata/clusters.rda")
-
-metadata(MAE2)[['Clusters']] <- clusters
 ```
 
 `createClusters` uses functions from Mfuzz [6] to separate the `percentMatrix`
@@ -371,14 +336,14 @@ plots.
 
 ### Examine Clusters of Interest
 
-```{r retrun cluster 1, warning=FALSE, message=FALSE}
+```{r retrun cluster 1, warning=FALSE, message=FALSE, eval=FALSE}
 MAE2 <- returnCluster(MAE2, clusterData = assay(MAE2, 6),
                      whichCluster = 1, fitCluster = 0.4)
 ```
 
 ## Take Selected Pathways Forward
 
-```{r diffExpressRes, warning=FALSE, message=FALSE}
+```{r diffExpressRes, warning=FALSE, message=FALSE, eval=FALSE}
 MAE2 <- diffExpressRes(MAE = MAE2, df = assay(MAE, 1), dataType = "Log2FC",
                 genes_ID = assay(MAE, 3), name = "miR_log2fc")
 
@@ -397,7 +362,7 @@ Note. Parameter `df` of `diffExpressRes` should not contain any NAs. Parameter
 
 ### Find Common Genes in the Pathways of Interest and the Input mRNA Data
 
-```{r mRNAs of interest, warning=FALSE, message=FALSE}
+```{r mRNAs of interest, warning=FALSE, message=FALSE, eval=FALSE}
 MAE2 <- reduceWiki(MAE = MAE2, path_data = assay(MAE2, 3),
                    stringWiki = 'Lung fibrosis')
 
@@ -411,7 +376,7 @@ the input data. The `Lung fibrosis` pathway is used in this example.
 
 ## Create Correlation Matrix
 
-```{r Correlation matrix, warning=FALSE, message=FALSE}
+```{r Correlation matrix, warning=FALSE, message=FALSE, eval=FALSE}
 MAE3 <- MultiAssayExperiment()
 
 MAE3 <- mirMrnaInt(MAE = MAE3,
@@ -459,17 +424,6 @@ MAE3 <- dataMiningMatrix(MAE = MAE3, corrTable = assay(MAE3, 1),
                          mirtarbase = assay(MAE3, 4))
 ```
 
-```{r Datamining working, echo=FALSE}
-# Because the dload functions could not be performed in vignette building, 
-# Int_data is included.
-
-load("../inst/extdata/Int_data.rda")
-
-X <- MultiAssayExperiment(list(MiningMatrix = Int_data))
-
-MAE3 <- c(MAE3, X)
-```
-
 The `dataMiningMatrix` function will identify if any of the potential miR-mRNA
 interactions from the `mirMrnaInt` function are predicted/ functionally 
 assessed, and display this as integers.
@@ -484,16 +438,6 @@ MAE3 <- matrixFilter(MAE = MAE3, miningMatrix = assay(MAE3, 5),
                      maxCor = -0.5)
 ```
 
-```{r matrixFilter working, warning=FALSE, message=FALSE, echo=FALSE}
-# Because dload functions are not evaluated, assay(MAE3, 5) should be
-# assay(MAE3, 2).
-
-MAE3 <- matrixFilter(MAE = MAE3, miningMatrix = assay(MAE3, 2),
-                     negativeOnly = TRUE,
-                     predictedOnly = FALSE,
-                     threshold = 2,
-                     maxCor = -0.5)
-```
 
 Potential interactions with no-little evidence can be filtered out using
 parameters on `matrixFilter`.
@@ -706,7 +650,7 @@ Hypoxia induced. This data was published in
 
 ## Load Data
 
-```{r loadhuman, message=FALSE, warning=FALSE}
+```{r loadhuman, message=FALSE, warning=FALSE, eval=FALSE}
 library(org.Hs.eg.db)
 
 data("hs_miR")
@@ -735,7 +679,7 @@ like what was done above.
 
 Some miR data will have a `.` at the end of the gene names because there can be multiple transcripts with the same name. It is best to keep these extra genes. It is recommended to replace the final `.` with a `*` symbol to make this more obvious.
 
-```{r loadmRNA, message=FALSE, warning=FALSE}
+```{r loadmRNA, message=FALSE, warning=FALSE, eval=FALSE}
 data("hs_mRNA")
 
 MAE <- startObject(hs_miR, hs_mRNA)
@@ -747,7 +691,7 @@ MAE <- getIdsMrna(MAE = MAE, assay(MAE, 2), mirror = 'useast', species = 'hsapie
 
 ## Differentiate Data
 
-```{r addPrefix, message=FALSE, warning=FALSE}
+```{r addPrefix, message=FALSE, warning=FALSE, eval=FALSE}
 MAE <- addPrefix(MAE = MAE, gene_df = assay(MAE, 1),
                  prefixString = "miR")
 
@@ -760,7 +704,7 @@ unique `prefixString` to the miR and mRNA data to do this. This must be used for
 
 ## Find Significantly Differentially Expressed Genes per Timepoint
 
-```{r siggenes, warning=FALSE, message=FALSE}
+```{r siggenes, warning=FALSE, message=FALSE, eval=FALSE}
 MAE <- genesList(MAE = MAE, method = 's',
                  miR_data = assay(MAE, 9),
                  mRNA_data = assay(MAE, 10))
@@ -772,7 +716,7 @@ MAE <- significantVals(MAE = MAE, method = 's',
 
 ## Get Significantly Differentially Expressed Gene IDs
 
-```{r getensemblids, warning=FALSE, message=FALSE}
+```{r getensemblids, warning=FALSE, message=FALSE, eval=FALSE}
 MAE <- addIds(MAE = MAE, method = 's',
               filtered_genelist = metadata(MAE)[[2]],
               miR_IDs = assay(MAE, 4),
@@ -795,13 +739,6 @@ MAE2 <- dloadGmt(MAE = MAE2, species = "Homo sapiens")
 MAE2 <- gmtEnsembl(MAE = MAE2, path_gene = assay(MAE2, 1),
                     path_data = assay(MAE2, 3),
                     orgDB = org.Hs.eg.db)
-```
-
-```{r hs dloadGmt working, echo=FALSE}
-# dloadGmt failed on bioconductor vignette build so hs_gmt is added instead
-# hs_gmt contains the MAE that would have been produced by gmtEnsembl.
-load(file = "../inst/extdata/hs_gmt.rda")
-MAE2 <- hs_gmt
 ```
 
 Since this dataset was from microarray data, it is useful to use the probes
@@ -839,13 +776,6 @@ MAE2 <- wikiList(MAE = MAE2, stringSpecies = "Homo sapiens",
                  stringSymbol = "En")
 ```
 
-```{r human wikiList working, echo=FALSE}
-# Loading w_list_human instead to speed up vignette building
-
-load("../inst/extdata/w_list_human.rda")
-
-metadata(MAE2)[['wikilist']] <- w_list_human
-```
 
 ```{r create_percent_matrix, warning=FALSE, message=FALSE, eval=FALSE}
 MAE2 <- wikiMatrix(MAE = MAE2, ID_list = metadata(MAE)[[4]],
@@ -1031,7 +961,7 @@ The time series datasets (Unilateral ureter obstruction (UUO) was run through Ti
 run through the same analysis in section 2. Results from the analysis can
 be contrasted to find differences between kidney fibrosis via FA and UUO.
 
-```{r loadUUO, message=FALSE, warning=FALSE}
+```{r loadUUO, message=FALSE, warning=FALSE, eval=FALSE}
 data("UUO_data")
 UUO_miRNA <- UUO_data[c(1:240),]
 UUO_mRNA <- UUO_data[-c(1:240),]
