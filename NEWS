@@ -412,3 +412,7 @@ TimiRGeN v v1.13.4(D) (Date: 06/11/2023)
 * BUg check - vignette building error
 * Added newer versions of wikipathways gmt data (oct 2023), TargetScans (v9) and miRTarBase (v9)
 * Re-wrote vignette to take less time
+
+TimiRGeN v v1.13.2(D) (Date: 12/12/2023)
+===============================
+* Changed vignette to avoid bugs.
